@@ -16,7 +16,7 @@ let initalTodo = [
   },
 ];
 const getTodos = () => {
-  fetch('http://https://calm-shelf-89866.herokuapp.com/alltodos'
+  fetch('http://calm-shelf-89866.herokuapp.com/alltodos'
   ,{
     method: 'get',
   }
