@@ -1,3 +1,4 @@
+
 let initalTodo = [
   { id: 1, todo: 'Buy milk.', complete: false, category: 'shopping' },
   { id: 2, todo: 'Clean the cat box.', complete: false, category: 'chores' },
@@ -14,6 +15,21 @@ let initalTodo = [
     category: 'School',
   },
 ];
+const getTodos = () => {
+  fetch('http://https://calm-shelf-89866.herokuapp.com/alltodos'
+  ,{
+    method: 'get',
+  }
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch(function (err) {
+      console.log(err);
+    });
+};
+
+getTodos();
+
 const LOCAL_KEY = 'todo.category';
 const LOCAL_ID_KEY = 'category.id';
 let initalTodos = JSON.parse(localStorage.getItem(LOCAL_KEY)) || initalTodo;
