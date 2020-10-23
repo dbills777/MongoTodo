@@ -48,6 +48,7 @@ app.post('/addtodo', (req, res) => {
 });
 
 app.get('/alltodos', (req, res) => {
+   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   Todo.find((err, todo) => {
     if (err) {
       console.log(err);

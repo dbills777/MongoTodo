@@ -18,7 +18,7 @@ let initalTodo = [
 const getTodos = () => {
   fetch('http://calm-shelf-89866.herokuapp.com/alltodos'
   ,{
-    method: 'get',
+    method: 'GET',
   }
   )
     .then((response) => response.json())
