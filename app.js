@@ -5,7 +5,7 @@ const Todo = require('./todoModel');
 const Cat = require('./categoryModel');
 const app = express();
 const port = 3000;
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -22,17 +22,16 @@ mongoose
   .catch((err) => console.log(err));
 
 app.post('/addtodo', (req, res) => {
-  console.log(req.query.todo);
+  console.log(req.body);
   Todo.create(
     {
-      todo: req.query.todo,
+      todo: req.body.todo,
       complete: false,
-      cat: req.query.cat,
+      cat: req.body.cat,
+      // category: req.query.category
       
     },
-    Cat.create({
-      name: req.query.cat,
-    }),
+    
     (err, todos) => {
       if (err) {
         console.log(err);
@@ -41,19 +40,56 @@ app.post('/addtodo', (req, res) => {
         if (err) {
           console.log(err);
         }
-        res.json(todos);
+        res.json(todos)
       });
     }
   );
 });
 
 app.get('/alltodos', (req, res) => {
-   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   Todo.find((err, todo) => {
     if (err) {
       console.log(err);
     }
     res.json(todo);
+  });
+});
+app.delete('/todo/:id', (req, res) => {
+  Todo.deleteOne(
+    {
+      _id: req.params.id,
+    },
+    (err, todo) => {
+      if (err) {
+        console.log(err);
+      }
+      
+        res.json(todo);
+    }
+  );
+});
+app.put('/todo/:id', (req, res) => {
+  Todo.findByIdAndUpdate(req.params.id,{new: true}, (err, todo) => {
+    todo.complete = !todo.complete
+    todo.save()
+    console.log(todo)
+    
+    Todo.updateOne(req.query, (err, todo) => {
+      console.log(todo)
+    // todo.complete = !todo.complete;
+
+      console.log(req.params)
+      if (err) {
+        console.log(err);
+      }
+      Todo.find((err, todo) => {
+        if (err) {
+          console.log(err);
+        }
+        // console.log(todo)
+        res.json(todo);
+      });
+    });
   });
 });
 
