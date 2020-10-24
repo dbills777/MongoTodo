@@ -41,13 +41,16 @@ form.addEventListener('submit', (e) => {
   console.log(data);
   if (todo && cat) {
     async function postTodo() {
-      const response = await fetch(`https://calm-shelf-89866.herokuapp.com`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `https://calm-shelf-89866.herokuapp.com/addtodo`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      );
       const todos = await response.json();
       console.log(todos);
       todoInput.value = '';
@@ -65,29 +68,29 @@ form.addEventListener('submit', (e) => {
 });
 // btn.addEventListener('click', addTodo);
 
-function addTodo() {
-  if (todoInput.value !== '' && todo.categoryInput.value !== '') {
-    initalTodos.push({
-      id: Math.floor(Math.random() * 200),
-      todo: todoInput.value.trim(),
-      complete: false,
-      category: categoryInput.value
-        ? categoryInput.value
-        : 'No Category Entered',
-    });
+// function addTodo() {
+//   if (todoInput.value !== '' && todo.categoryInput.value !== '') {
+//     initalTodos.push({
+//       id: Math.floor(Math.random() * 200),
+//       todo: todoInput.value.trim(),
+//       complete: false,
+//       category: categoryInput.value
+//         ? categoryInput.value
+//         : 'No Category Entered',
+//     });
 
-    todoInput.focus();
-  } else {
-    alert('must enter a todo, category is optional');
-  }
+//     todoInput.focus();
+//   } else {
+//     alert('must enter a todo, category is optional');
+//   }
 
-  console.log(initalTodos);
-  const notCompleted = document.querySelector('.notCompleted');
-  notCompleted.textContent = '';
-  todoInput.value = '';
-  categoryInput.value = '';
-  save();
-}
+//   console.log(initalTodos);
+//   const notCompleted = document.querySelector('.notCompleted');
+//   notCompleted.textContent = '';
+//   todoInput.value = '';
+//   categoryInput.value = '';
+//   save();
+// }
 
 function startTodos(initalTodos) {
   const holder = document.querySelector('.notCompleted');

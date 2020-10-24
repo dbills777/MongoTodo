@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Todo = require('./todoModel');
 const Cat = require('./categoryModel');
 const app = express();
-const port = 3008;
+const port = 3000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -16,7 +16,7 @@ mongoose
   )
   .then((result) =>
     app.listen(process.env.PORT || port, () =>
-      console.log(`"Static Todo App Listening at http://localhost:${port}`)
+      console.log(`"Static Todo App Listening at ${port}`)
     )
   )
   .catch((err) => console.log(err));
