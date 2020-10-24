@@ -73,7 +73,7 @@ app.delete('/delete', (req, res) => {
 
   Todo
     .deleteMany(query)
-    .then((result) => console.log(`Deleted ${result.deletedCount} item(s).`))
+    .then((result) => res.json(todo))
     .catch((err) => console.error(`Delete failed with error: ${err}`));
 });
 app.put('/todo/:id', (req, res) => {
