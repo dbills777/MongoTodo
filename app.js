@@ -68,10 +68,10 @@ app.delete('/todo/:id', (req, res) => {
     }
   );
 });
-app.delete('/delete/:complete', (req, res) => {
+app.delete('/delete', (req, res) => {
   todos.deleteMany(
     {
-      complete: req.params.complete,
+      complete: true,
     },
     (err, todo) => {
       if (err) {
