@@ -68,6 +68,20 @@ app.delete('/todo/:id', (req, res) => {
     }
   );
 });
+app.delete('/delete/:complete', (req, res) => {
+  Todo.deleteMany(
+    {
+      complete: req.params.complete,
+    },
+    (err, todo) => {
+      if (err) {
+        console.log(err);
+      }
+
+      res.json(todo);
+    }
+  );
+});
 app.put('/todo/:id', (req, res) => {
   Todo.findByIdAndUpdate(req.params.id,{new: true}, (err, todo) => {
     todo.complete = !todo.complete
