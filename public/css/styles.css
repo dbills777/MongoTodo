@@ -399,6 +399,20 @@ body {
   cursor: pointer;
 }
 
+#reset {
+  margin: 10px;
+  background: #9ea69d;
+  color: #fcfcfc;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  padding: 10px;
+  width: 40rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 #delete {
   margin: 10px;
   background: #9ea69d;

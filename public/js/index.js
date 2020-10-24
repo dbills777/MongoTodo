@@ -25,7 +25,23 @@ const input = document.querySelector('input');
 const reset = document.querySelector('#reset');
 const form = document.querySelector('#myForm');
 todoInput.focus();
+reset.addEventListener('click',()=>{
+  async function deleteTodos() {
+    const response = await fetch(
+      `https://calm-shelf-89866.herokuapp.com/delete`,
+      {
+        method: 'DELETE',
+      }
+    );
+    const todos = await response.json();
+    console.log(todos);
+    return todos;
+  }
 
+  deleteTodos().then((todos) => {
+    // start(todos);
+  });
+})
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -36,6 +52,7 @@ form.addEventListener('submit', (e) => {
   const cat = categoryText.value;
   const data = { todo, cat, complete: 'false' };
   console.log(data);
+
   if (todo && cat) {
     async function postTodo() {
       const response = await fetch(
@@ -63,31 +80,7 @@ form.addEventListener('submit', (e) => {
     alert('must enter a todo and a category');
   }
 });
-// btn.addEventListener('click', addTodo);
 
-// function addTodo() {
-//   if (todoInput.value !== '' && todo.categoryInput.value !== '') {
-//     initalTodos.push({
-//       id: Math.floor(Math.random() * 200),
-//       todo: todoInput.value.trim(),
-//       complete: false,
-//       category: categoryInput.value
-//         ? categoryInput.value
-//         : 'No Category Entered',
-//     });
-
-//     todoInput.focus();
-//   } else {
-//     alert('must enter a todo, category is optional');
-//   }
-
-//   console.log(initalTodos);
-//   const notCompleted = document.querySelector('.notCompleted');
-//   notCompleted.textContent = '';
-//   todoInput.value = '';
-//   categoryInput.value = '';
-//   save();
-// }
 
 function startTodos(initalTodos) {
   const holder = document.querySelector('.notCompleted');
