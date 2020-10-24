@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Todo = require('./todoModel');
 const Cat = require('./categoryModel');
 const app = express();
-const port = 3000;
+const port = 3008;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
