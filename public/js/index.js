@@ -1,10 +1,10 @@
-// const url = 'https://calm-shelf-89866.herokuapp.com/alltodos';
-const todoURL = 'http://localhost:3000';
+const url = 'https://calm-shelf-89866.herokuapp.com';
+// const todoURL = 'http://localhost:3000';
 
 //Fetch all function
 async function fetchTodos() {
   const route = '/alltodos';
-  const response = await fetch(`${todoURL}${route}`);
+  const response = await fetch(`${url}${route}`);
   const todos = await response.json();
   return todos;
 }
@@ -41,7 +41,7 @@ form.addEventListener('submit', (e) => {
   console.log(data);
   if (todo && cat) {
     async function postTodo() {
-      const response = await fetch(`http://localhost:3000/addtodo`, {
+      const response = await fetch(`https://calm-shelf-89866.herokuapp.com`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,9 +145,12 @@ function startTodos(initalTodos) {
       const delRoute = `/todo/:id`;
 
       async function deleteTodos() {
-        const response = await fetch(`http://localhost:3000/todo/${id}`, {
-          method: 'DELETE',
-        });
+        const response = await fetch(
+          `https://calm-shelf-89866.herokuapp.com/todo/${id}`,
+          {
+            method: 'DELETE',
+          }
+        );
         const todos = await response.json();
         console.log(todos);
         return todos;
@@ -176,9 +179,12 @@ function startTodos(initalTodos) {
       console.log(id);
 
       async function toggleComplete() {
-        const response = await fetch(`http://localhost:3000/todo/${id}`, {
-          method: 'PUT',
-        });
+        const response = await fetch(
+          `https://calm-shelf-89866.herokuapp.com/todo/${id}`,
+          {
+            method: 'PUT',
+          }
+        );
         const todos = await response.json();
         console.log(todos);
         return todos;
@@ -245,9 +251,12 @@ function completed(initalTodos) {
       const id = lookup._id;
 
       async function toggleComplete() {
-        const response = await fetch(`http://localhost:3000/todo/${id}`, {
-          method: 'PUT',
-        });
+        const response = await fetch(
+          `https://calm-shelf-89866.herokuapp.com/todo/${id}`,
+          {
+            method: 'PUT',
+          }
+        );
         const todos = await response.json();
         console.log(todos);
         return todos;
@@ -270,9 +279,12 @@ function completed(initalTodos) {
       const id = lookup._id;
 
       async function deleteTodos() {
-        const response = await fetch(`http://localhost:3000/todo/${id}`, {
-          method: 'DELETE',
-        });
+        const response = await fetch(
+          `https://calm-shelf-89866.herokuapp.com/todo/${id}`,
+          {
+            method: 'DELETE',
+          }
+        );
         const todos = await response.json();
         console.log(todos);
         return todos;
