@@ -1,72 +1,72 @@
+// const url = 'https://calm-shelf-89866.herokuapp.com/alltodos';
+const todoURL = 'http://localhost:3000';
 
-let initalTodo = [
-  { id: 1, todo: 'Buy milk.', complete: false, category: 'shopping' },
-  { id: 2, todo: 'Clean the cat box.', complete: false, category: 'chores' },
-  { id: 3, todo: 'Chips and salsa.', complete: true, category: 'House' },
-  { id: 4, todo: 'Test Application', complete: false, category: 'School' },
-  { id: 5, todo: 'Walk the Dog', complete: false, category: 'House' },
-  { id: 6, todo: 'Check Email.', complete: true, category: 'Work' },
-  { id: 7, todo: 'Push to GitHub', complete: false, category: 'school' },
-  { id: 8, todo: 'Make Dinner', complete: true, category: 'house' },
-  {
-    id: 45,
-    todo: 'Finish Homework for DGM 3760',
-    complete: false,
-    category: 'School',
-  },
-];
-const getTodos = () => {
-  fetch('http://calm-shelf-89866.herokuapp.com/alltodos'
-  ,{
-    method: 'GET',
-  }
-  )
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch(function (err) {
-      console.log(err);
-    });
-};
+//Fetch all function
+async function fetchTodos() {
+  const route = '/alltodos';
+  const response = await fetch(`${todoURL}${route}`);
+  const todos = await response.json();
+  return todos;
+}
 
-getTodos();
-
-const LOCAL_KEY = 'todo.category';
-const LOCAL_ID_KEY = 'category.id';
-let initalTodos = JSON.parse(localStorage.getItem(LOCAL_KEY)) || initalTodo;
-let selectedID = localStorage.getItem(LOCAL_ID_KEY);
+fetchTodos().then((todos) => {
+  save(todos);
+});
+function save(todos) {
+  startTodos(todos);
+  completed(todos);
+  allCategories(todos);
+}
 
 const todoInput = document.querySelector('#todo-input');
 const categoryInput = document.querySelector('#category-input');
 const btn = document.querySelector('#add-button');
 const input = document.querySelector('input');
 const reset = document.querySelector('#reset');
-// reset.textContent='clear'
-//Clear Local Storage
+const form = document.querySelector('#myForm');
+todoInput.focus();
+
 reset.addEventListener('click', () => {
-  localStorage.clear();
-  location.reload();
+  console.log('delete completed');
 });
-//Get Todo Input
-todoInput.addEventListener('keydown', (e) => {
-  e.keyCode === 13 ? addTodo(e) : null;
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log('submitted');
+  const todoText = document.querySelector('#todo-input[type="text"]');
+  const categoryText = document.querySelector('#category-input[type="text"]');
+  const todo = todoText.value;
+  const cat = categoryText.value;
+  const data = { todo, cat, complete: 'false' };
+  console.log(data);
+  if (todo && cat) {
+    async function postTodo() {
+      const response = await fetch(`http://localhost:3000/addtodo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const todos = await response.json();
+      console.log(todos);
+      todoInput.value = '';
+      categoryInput.value = '';
+      todoInput.focus();
+      return todos;
+    }
+
+    postTodo().then((todos) => {
+      save(todos);
+    });
+  } else {
+    alert('must enter a todo and a category');
+  }
 });
-//Get Category Input
-categoryInput.addEventListener('keydown', (e) => {
-  e.keyCode === 13 ? addTodo(e) : null;
-});
-// save function
-function save() {
-  localStorage.setItem(LOCAL_KEY, JSON.stringify(initalTodos));
-  localStorage.setItem(LOCAL_ID_KEY, selectedID);
-  startTodos();
-  allCategories();
-  completed();
-}
-function toggleComplete() {}
-btn.addEventListener('click', addTodo);
+// btn.addEventListener('click', addTodo);
 
 function addTodo() {
-  if (todoInput.value !== '') {
+  if (todoInput.value !== '' && todo.categoryInput.value !== '') {
     initalTodos.push({
       id: Math.floor(Math.random() * 200),
       todo: todoInput.value.trim(),
@@ -89,7 +89,7 @@ function addTodo() {
   save();
 }
 
-function startTodos(e) {
+function startTodos(initalTodos) {
   const holder = document.querySelector('.notCompleted');
   holder.textContent = '';
   initalTodos.map((todo) => {
@@ -136,10 +136,26 @@ function startTodos(e) {
       const lookup = initalTodos.find((todo) => {
         return todotext === todo.todo;
       });
+      const id = lookup._id;
+      console.log(id);
       // remove from original array if deleted
       initalTodos.splice(initalTodos.indexOf(lookup), 1);
       parent.remove();
-      save();
+      // save();
+      const delRoute = `/todo/:id`;
+
+      async function deleteTodos() {
+        const response = await fetch(`http://localhost:3000/todo/${id}`, {
+          method: 'DELETE',
+        });
+        const todos = await response.json();
+        console.log(todos);
+        return todos;
+      }
+
+      deleteTodos().then((todos) => {
+        // start(todos);
+      });
     });
     // change completed status in original array if marked as complete
     checkBtn.addEventListener('click', function () {
@@ -152,14 +168,30 @@ function startTodos(e) {
       console.log(initalTodos.indexOf(lookup));
       console.log(lookup);
       initalTodos[index]['complete'] = !initalTodos[index]['complete'];
-      completed();
+      completed(initalTodos);
+      allCategories(initalTodos);
       parent.remove();
-      save();
+      // save();
+      const id = lookup._id;
+      console.log(id);
+
+      async function toggleComplete() {
+        const response = await fetch(`http://localhost:3000/todo/${id}`, {
+          method: 'PUT',
+        });
+        const todos = await response.json();
+        console.log(todos);
+        return todos;
+      }
+
+      toggleComplete().then((todos) => {
+        // startTodos(todos);
+      });
     });
   });
 }
 
-function completed(e) {
+function completed(initalTodos) {
   const holder = document.querySelector('.Completed');
   holder.textContent = null;
   initalTodos.map((todo) => {
@@ -206,9 +238,24 @@ function completed(e) {
       console.log(initalTodos.indexOf(lookup));
       console.log(lookup);
       initalTodos[index]['complete'] = !initalTodos[index]['complete'];
-      // initalTodos.push(lookup);
+      startTodos(initalTodos);
+      allCategories(initalTodos);
       parent.remove();
-      save();
+      // save();
+      const id = lookup._id;
+
+      async function toggleComplete() {
+        const response = await fetch(`http://localhost:3000/todo/${id}`, {
+          method: 'PUT',
+        });
+        const todos = await response.json();
+        console.log(todos);
+        return todos;
+      }
+
+      toggleComplete().then((todos) => {
+        // save(todos);
+      });
     });
     delBtn.addEventListener('click', function () {
       const parent = this.parentNode;
@@ -219,16 +266,30 @@ function completed(e) {
       // remove from original array if deleted
       initalTodos.splice(initalTodos.indexOf(lookup), 1);
       parent.remove();
-      save();
+      // save();
+      const id = lookup._id;
+
+      async function deleteTodos() {
+        const response = await fetch(`http://localhost:3000/todo/${id}`, {
+          method: 'DELETE',
+        });
+        const todos = await response.json();
+        console.log(todos);
+        return todos;
+      }
+
+      deleteTodos().then((todos) => {
+        // start(todos);
+      });
     });
   });
 }
 
-function allCategories() {
+function allCategories(initalTodos) {
   const allcats = document.querySelector('.Categories');
   allcats.textContent = '';
   const eachCat = initalTodos.map((item) => {
-    return item.category.toLocaleLowerCase();
+    return item.cat.toLocaleLowerCase();
   });
   const nodupes = Array.from(new Set([...eachCat]));
 
@@ -244,7 +305,7 @@ function allCategories() {
     newLi.classList.add('capital');
     allcats.appendChild(newLi);
     initalTodos.filter((todo) => {
-      if (todo.category.toLocaleLowerCase() === value.toLocaleLowerCase()) {
+      if (todo.cat.toLocaleLowerCase() === value.toLocaleLowerCase()) {
         const items = document.createElement('ol');
         items.classList.add('itemHover');
         const check = document.createElement('btn');
@@ -269,4 +330,3 @@ function allCategories() {
     }
   }
 }
-save();

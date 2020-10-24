@@ -14,19 +14,23 @@
       integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
       crossorigin="anonymous"
     />
-    <title>Derrick Bills Mongo</title>
+    <title>Derrick Bills Todo</title>
 
     <link href="css/styles.css" rel="stylesheet" />
   </head>
 
   <body>
     <div class="container" id="container">
+      <form  class="form" id="myForm">
       <div class="addTask">
-        <input id="todo-input" type="text" placeholder="Add Todo" />
-        <input id="category-input" type="text" placeholder="Category" />
+        <input id="todo-input" name="todo-input" type="text" placeholder="Add Todo" />
+        <input id="category-input" name="category-input" type="text" placeholder="Category" />
         <button id="add-button" class="fas fa-plus icon"></button>
-        <button id="reset" class="fas fa-trash-restore-alt icon"></button>
+        <button id="reset" class="fas fa-trash-restore-alt icon">
+          Delete Completed
+        </button>
       </div>
+      </form>
       <div class="holder title1"><h3></h3></div>
       <ol class="notCompleted"></ol>
       <div class="holder title2"><h3></h3></div>
@@ -38,5 +42,4 @@
     </div>
   </body>
   <script defer src="./js/index.js"></script>
-  <!-- <script defer src="./js/test.js"></script> -->
 </html>
