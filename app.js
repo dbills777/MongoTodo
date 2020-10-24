@@ -69,18 +69,12 @@ app.delete('/todo/:id', (req, res) => {
   );
 });
 app.delete('/delete', (req, res) => {
-  todos.deleteMany(
-    {
-      complete: true,
-    },
-    (err, todo) => {
-      if (err) {
-        console.log(err);
-      }
+  const query = { complete: false };
 
-      res.json(todo);
-    }
-  );
+  todos
+    .deleteMany(query)
+    .then((result) => console.log(`Deleted ${result.deletedCount} item(s).`))
+    .catch((err) => console.error(`Delete failed with error: ${err}`));
 });
 app.put('/todo/:id', (req, res) => {
   Todo.findByIdAndUpdate(req.params.id,{new: true}, (err, todo) => {
