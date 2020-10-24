@@ -26,9 +26,6 @@ const reset = document.querySelector('#reset');
 const form = document.querySelector('#myForm');
 todoInput.focus();
 
-reset.addEventListener('click', () => {
-  console.log('delete completed');
-});
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
