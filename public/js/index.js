@@ -25,7 +25,7 @@ const input = document.querySelector('input');
 const reset = document.querySelector('#reset');
 const form = document.querySelector('#myForm');
 todoInput.focus();
-reset.addEventListener('click',()=>{
+reset.addEventListener('click',(e)=>{
   e.preventDefault()
   async function deleteTodos() {
     const response = await fetch(
