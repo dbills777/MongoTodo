@@ -40,7 +40,7 @@ reset.addEventListener('click',()=>{
 
   deleteTodos().then((todos) => {
     // save(todos);
-    completed(todos)
+    completed(initalTodos)
   });
 })
 
