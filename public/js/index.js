@@ -39,7 +39,8 @@ reset.addEventListener('click',()=>{
   }
 
   deleteTodos().then((todos) => {
-    save(todos);
+    // save(todos);
+    fetchTodos(todos)
   });
 })
 
