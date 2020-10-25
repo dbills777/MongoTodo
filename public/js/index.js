@@ -41,8 +41,8 @@ reset.addEventListener('click',(e)=>{
 
   deleteTodos().then((todos) => {
     // save(todos);
-    completed()
   });
+  completed()
 })
 
 form.addEventListener('submit', (e) => {
