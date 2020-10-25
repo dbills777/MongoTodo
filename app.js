@@ -27,9 +27,7 @@ app.post('/addtodo', (req, res) => {
     {
       todo: req.body.todo,
       complete: false,
-      cat: req.body.cat,
-      // category: req.query.category
-      
+      cat: req.body.cat,      
     },
     
     (err, todos) => {
@@ -84,7 +82,6 @@ app.put('/todo/:id', (req, res) => {
     
     Todo.updateOne(req.query, (err, todo) => {
       console.log(todo)
-    // todo.complete = !todo.complete;
 
       console.log(req.params)
       if (err) {
@@ -94,7 +91,6 @@ app.put('/todo/:id', (req, res) => {
         if (err) {
           console.log(err);
         }
-        // console.log(todo)
         res.json(todo);
       });
     });
