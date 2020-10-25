@@ -28,7 +28,6 @@ const reset = document.querySelector('#reset');
 const form = document.querySelector('#myForm');
 todoInput.focus();
 reset.addEventListener('click',()=>{
-  e.preventDefault()
   async function deleteTodos() {
     const response = await fetch(
       `https://calm-shelf-89866.herokuapp.com/delete`,
