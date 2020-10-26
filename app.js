@@ -1,23 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-require('dotenv').config()
 const Todo = require('./todoModel');
 const Cat = require('./categoryModel');
 const app = express();
+const port = 3000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 mongoose
   .connect(
-    process.env.MONGOURL,
+    'mongodb+srv://dblist:dblist123@todoslist.nqodb.mongodb.net/todoslist?retryWrites=true&w=majority',
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
- 
   .then((result) =>
     app.listen(process.env.PORT || port, () =>
-      console.log(`Static Todo App Listening at ${process.env.PORT}`)
+      console.log(`"Static Todo App Listening at ${port}`)
     )
   )
   .catch((err) => console.log(err));
