@@ -24,7 +24,9 @@ At this point you can remove the local storage and the provided initial todo obj
 
 # Documentation:
 - ### All application files are included in this project. The Front end functionality is included and served in the public folder. 
-
+  - Apllication serves front end files from the public folder.
+  - Application is hosted with Heroko.
+  - MongoDB Database.
 - ### To run the application Locally.
   - "npm install"
   - change url in public/js/index.js to localhost:3000 or your prefered port

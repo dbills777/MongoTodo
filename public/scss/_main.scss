@@ -4,7 +4,7 @@ body {
   display: flex;
   justify-content: center;
   height: 100vh;
-  background-color: rgb(201, 201, 201);
+  background-color: #4e5d6a;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
   margin: 0 auto;
@@ -123,10 +123,11 @@ ol {
     }
   }
   &.Completed li {
-    background-color: rgb(138, 209, 138);
+    background-color: #7bed8d;
     border: 1px solid black;
     text-decoration: line-through;
     text-decoration-color: rgba(3, 3, 3, 0.527);
+    color: #748a9d;
 
     box-shadow: 4px 6px 5px -2px rgba(0, 0, 0, 0.75);
     cursor: pointer;
@@ -148,7 +149,7 @@ ol {
     }
   }
   &.notCompleted li {
-    background-color: rgb(142, 147, 221);
+    background-color: #a6bcd0;
     border: 1px solid black;
     box-shadow: 4px 6px 5px -2px rgba(0, 0, 0, 0.75);
     cursor: pointer;
@@ -185,4 +186,12 @@ ol {
 }
 .black {
   color: black;
+}
+#add-button, #reset{
+  background-color: transparent;
+}
+#add-button:hover, #reset:hover{
+      transform: scale(1.05);
+
+  color: red;
 }
